@@ -1,5 +1,7 @@
 package com.socketserver.hugo.socket;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -9,10 +11,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+@Component
 public class MyWebSocketHandler extends TextWebSocketHandler {
 
     private static Set<WebSocketSession> sessions = Collections.synchronizedSet(new HashSet<>());
-
+    
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
@@ -37,4 +40,15 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
         sessions.remove(session);
         System.out.println("Disconnected: " + session.getId());
     }
+
+    // @Bean
+    public void broadCast(String message) throws Exception{
+        System.out.println(message);
+        for(WebSocketSession s : sessions){
+            if(s.isOpen()){
+                s.sendMessage(new TextMessage(message));
+            }
+        }
+    }
+    
 }
