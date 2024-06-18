@@ -29,8 +29,12 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
         System.out.println("Received: " + payload);
         for (WebSocketSession s : sessions) {
             if (s.isOpen()) {
-                s.sendMessage(new TextMessage(payload));
-                System.out.println(s.getId()+"샌드 메세지 :"+ payload);
+                if(s.getId() == session.getId()){
+                    s.sendMessage(new TextMessage("내용 : "+payload+" 전송 성공"));
+                }else{
+                    s.sendMessage(new TextMessage(payload));
+                    System.out.println(s.getId()+"전체방 전송 :"+ payload);
+                }
             }
         }
     }

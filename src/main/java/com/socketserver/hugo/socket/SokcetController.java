@@ -21,8 +21,9 @@ public class SokcetController {
         
  
         String answer ="hello world";
-        if(param.isEmpty()){
+        if(!param.isEmpty()){
             answer = param;
+            
         }
    
         try {
