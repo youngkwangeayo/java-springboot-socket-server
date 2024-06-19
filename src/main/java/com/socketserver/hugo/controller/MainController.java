@@ -1,5 +1,6 @@
 package com.socketserver.hugo.controller;
 
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
+
+
 
 
 @Controller
@@ -27,6 +30,19 @@ public class MainController {
         // return "테스트중 밑에 주석풀기";
         return result;
     }
+
+    @GetMapping("/test")
+    public @ResponseBody String test() throws InterruptedException{
+        System.out.println("진입");
+        long s = System.currentTimeMillis();
+        long e;
+        Thread.sleep(3000);
+        e = System.currentTimeMillis();
+        System.out.println((e-s));
+        
+        return "{data : OK}";
+    }
+    
 
     // @PostMapping("/test")
     // public Response handleJsonString(@RequestBody String jsonString) {
