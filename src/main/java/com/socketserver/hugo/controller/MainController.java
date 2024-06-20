@@ -4,7 +4,8 @@ import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -32,18 +36,35 @@ public class MainController {
     }
 
     @GetMapping("/test")
-    public @ResponseBody String test() throws InterruptedException{
+    public @ResponseBody ResponseEntity test() throws InterruptedException{
         System.out.println("진입");
         long s = System.currentTimeMillis();
         long e;
         Thread.sleep(3000);
         e = System.currentTimeMillis();
         System.out.println((e-s));
-        
-        return "{data : OK}";
+
+        Map<String,Object> res = new HashMap<>();
+        res.put("data", "OK");
+
+        // return "{'data' : 'OK'}";
+        return new ResponseEntity<>(res,HttpStatus.OK);
     }
     
-
+    @PostMapping("/testWathing")
+    public @ResponseBody ResponseEntity testWathing(@RequestBody Map<String,Object> entity) throws InterruptedException {
+        System.out.println("===========웨이팅 진입===============");
+        System.out.println(" 바디 : "+entity.toString());
+        long s = System.currentTimeMillis();
+        long e;
+        Thread.sleep(5000);
+        e = System.currentTimeMillis();
+        System.out.println((e-s));
+        Map<String,Object> res = new HashMap<>();
+        res.put("data", "OK");
+        return new ResponseEntity<>(res,HttpStatus.OK);
+    }
+    
     // @PostMapping("/test")
     // public Response handleJsonString(@RequestBody String jsonString) {
     //     // JSON 문자열을 객체로 변환
