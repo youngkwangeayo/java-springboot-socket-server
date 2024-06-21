@@ -2,6 +2,7 @@ package com.socketserver.hugo.socket;
 
 import org.apache.logging.log4j.message.MapMessage;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -52,7 +53,7 @@ public class MyWebSocketHandler<T> extends TextWebSocketHandler {
 
     // @Bean
     public void broadCast(String message) throws Exception{
-        System.out.println("========스트링 메소드실행=====");
+        System.out.println("========스트링 broadCast 메소드실행=====");
         System.out.println(message);
         for(WebSocketSession s : sessions){
             if(s.isOpen()){
@@ -64,7 +65,7 @@ public class MyWebSocketHandler<T> extends TextWebSocketHandler {
 
       // @Bean
     public void broadCast(Map<String,T> message) throws Exception{
-        System.out.println("========맵 메소드실행=====");
+        System.out.println("========맵 broadCast 메소드실행=====");
         System.out.println(message);
         String jsonMessage = objectMapper.writeValueAsString(message);
         System.out.println(jsonMessage);
@@ -73,14 +74,14 @@ public class MyWebSocketHandler<T> extends TextWebSocketHandler {
             if(s.isOpen()){
                 s.sendMessage(new TextMessage(jsonMessage));
                 
-                
+                // asyncSendMessage(jsonMessage);
             }
         }
     }
 
     public void broadCast(Object message) throws Exception{
         String resMessage;
-        System.out.println("========오브젝트 메소드실행=====");
+        System.out.println("========오브젝트 broadCast 메소드실행=====");
         if(message instanceof String){
             resMessage =(String) message;
         }else{
@@ -99,5 +100,14 @@ public class MyWebSocketHandler<T> extends TextWebSocketHandler {
             }
         }
     }
+
+
+    // @Async
+    // private void asyncSendMessage(Object message) throws InterruptedException{
+    //     Thread.sleep(5000);
+    //     System.out.println("비동기 메세지 받음 : "+message);
+    //     System.out.println("비동기 타입 : "+message.getClass().getName());
+        
+    // }
     
 }

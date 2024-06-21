@@ -53,7 +53,7 @@ public class MainController {
     
     @PostMapping("/testWathing")
     public @ResponseBody ResponseEntity testWathing(@RequestBody Map<String,Object> entity) throws InterruptedException {
-        System.out.println("===========웨이팅 진입===============");
+        System.out.println("===========웨이팅 testWathing 진입===============");
         System.out.println(" 바디 : "+entity.toString());
         long s = System.currentTimeMillis();
         long e;
