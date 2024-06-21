@@ -19,11 +19,11 @@ public class SokcetController {
 
     @SuppressWarnings("unchecked")
     @GetMapping("/hay")
-    public String hay(@RequestParam(name = "req",defaultValue = "") String param) {
+    public String hay(@RequestParam(name = "req",defaultValue = "") String param, @RequestParam(name = "orderId",defaultValue = "17") String orderId) {
         System.out.println("리퀘스트쿼리"+param + param.isEmpty());
 
         @SuppressWarnings("rawtypes")
-        RobotAnswerDTO robotAnswer = new RobotAnswerDTO("17");
+        RobotAnswerDTO robotAnswer = new RobotAnswerDTO(orderId);
         
         robotAnswer.setSendMessage("hello world");
       
