@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 
 
@@ -13,8 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.socketserver.hugo.dto.ResJsonDTO;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -26,11 +33,13 @@ public class MainController {
 
     @GetMapping("/hello")
     public @ResponseBody Map getMethodName() {
+        System.out.println("===요청!!! testHello===");
         String message = "hello world";
-        HashMap<String,String> result = new HashMap<>();
-
+        long tid =Thread.currentThread().getId();
+        HashMap<String,Object> result = new HashMap<>();
         // HttpHeaders header =  new HttpHeaders();
         result.put("message", message);
+        result.put("ThreadId", tid);
         // return "테스트중 밑에 주석풀기";
         return result;
     }
@@ -57,7 +66,7 @@ public class MainController {
         System.out.println(" 바디 : "+entity.toString());
         long s = System.currentTimeMillis();
         long e;
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         e = System.currentTimeMillis();
         System.out.println((e-s));
         Map<String,Object> res = new HashMap<>();
@@ -65,18 +74,9 @@ public class MainController {
         return new ResponseEntity<>(res,HttpStatus.OK);
     }
     
-    // @PostMapping("/test")
-    // public Response handleJsonString(@RequestBody String jsonString) {
-    //     // JSON 문자열을 객체로 변환
-    //     ObjectMapper objectMapper = new ObjectMapper();
-    //     Response response = null;
-    //     try {
-    //         response = objectMapper.readValue(jsonString, Response.class);
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     // 변환된 객체를 반환하거나 필요한 작업을 수행
-    //     return response;
-    // }
-    
+
+
+ 
+
+ 
 }
